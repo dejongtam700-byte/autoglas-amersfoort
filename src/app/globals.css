@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #09090b;
+  --color-anthracite: #161618;
+  --color-steel: #27272a;
+  --color-silver: #a1a1aa;
+  --color-signal: #e21d2d;
+  --color-signal-dark: #b8121f;
+  --color-paper: #f5f5f5;
+  --color-graphite: #3f3f46;
+
+  --font-display: var(--font-space-grotesk), "Space Grotesk", "Inter Display", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 88px;
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-ink font-sans text-paper antialiased;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-signal);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@utility shell {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 64px);
+}
+
+@utility eyebrow {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+@utility headline-xl {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+}
+
+@utility headline-lg {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  font-size: clamp(2.5rem, 5.2vw, 4.75rem);
+}
+
+@utility btn {
+  @apply inline-flex min-h-[52px] items-center justify-center gap-3 px-6 font-display text-[15px] font-medium tracking-[-0.01em] transition-[background-color,color,border-color,transform] duration-200 select-none;
+  &:active {
+    transform: translateY(1px);
+  }
+}
+@utility btn-primary {
+  @apply btn bg-signal text-white hover:bg-signal-dark;
+}
+@utility btn-ghost-dark {
+  @apply btn border border-steel text-paper hover:border-paper;
+}
+@utility btn-ghost-light {
+  @apply btn border border-ink/20 text-ink hover:border-ink;
+}
+@utility btn-link {
+  @apply inline-flex items-center gap-2 font-display text-[13px] font-medium uppercase tracking-[0.16em] text-signal hover:text-paper;
+}
+@utility btn-icon {
+  @apply h-[18px] w-[18px] shrink-0;
+}
+
+/* ── 3D-glas: highlight bij hover/selectie ── */
+.pane-hit {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 1;
+  transition:
+    fill 0.25s ease,
+    stroke 0.25s ease;
+}
+[data-active] > svg > .pane-hit {
+  fill: rgb(226 29 45 / 0.16);
+  stroke: #e21d2d;
+}
+.pane-hit:focus-visible {
+  stroke: #fff;
+  stroke-dasharray: 3 2;
+}
+
+/* ── Form-auto (bovenaanzicht) ── */
+.plan-hit {
+  fill: transparent;
+  stroke: transparent;
+  transition:
+    fill 0.2s ease,
+    stroke 0.2s ease;
+  cursor: pointer;
+}
+.plan-hit:hover {
+  fill: rgb(226 29 45 / 0.12);
+  stroke: rgb(226 29 45 / 0.7);
+}
+.plan-hit[aria-checked="true"] {
+  fill: rgb(226 29 45 / 0.3);
+  stroke: #e21d2d;
+  stroke-width: 1.4;
+}
+.plan-hit:focus-visible {
+  outline: none;
+  stroke: #fff;
+  stroke-width: 1.4;
+}
+
+/* hero-zachte overgang van de studiovloer naar de pagina */
+.studio-floor {
+  background:
+    radial-gradient(60% 55% at 62% 58%, rgb(63 63 70 / 0.35), transparent 70%),
+    radial-gradient(40% 30% at 64% 70%, rgb(226 29 45 / 0.06), transparent 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
