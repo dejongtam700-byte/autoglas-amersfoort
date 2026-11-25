@@ -41,8 +41,8 @@ function json(status: number, body: Record<string, unknown>) {
   return NextResponse.json(body, { status, headers: { "Cache-Control": "no-store" } });
 }
 
-const esc = (v: string) =>
-  v.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+const ESCAPES: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const esc = (v: string) => v.replace(/[&<>"']/g, (c) => ESCAPES[c] ?? c);
 
 /** Controleert de eerste bytes van het bestand, zodat een hernoemd bestand niet als afbeelding doorgaat. */
 function hasImageSignature(buf: Uint8Array, type: string) {
