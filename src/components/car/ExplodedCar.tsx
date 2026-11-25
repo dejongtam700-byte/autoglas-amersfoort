@@ -96,10 +96,14 @@ export default function ExplodedCar({ scrollRef, reducedMotion }: Props) {
   useEffect(() => setReady(true), []);
 
   useEffect(() => {
-    const viewport = viewportRef.current;
-    const camera = cameraRef.current;
-    const stage = stageRef.current;
-    if (!viewport || !camera || !stage) return;
+    const viewportEl = viewportRef.current;
+    const cameraEl = cameraRef.current;
+    const stageEl = stageRef.current;
+    if (!viewportEl || !cameraEl || !stageEl) return;
+    // expliciet niet-null, zodat de type-narrowing ook binnen tick() (function declaration) geldt
+    const viewport: HTMLDivElement = viewportEl;
+    const camera: HTMLDivElement = cameraEl;
+    const stage: HTMLDivElement = stageEl;
 
     let unit = 1;
     const resize = () => {
